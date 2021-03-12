@@ -17,7 +17,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="product in products" :key="product.id" @click="addProductOnCart(product)">
+        <tr v-for="product in products" :key="product.id">
           <td>
             {{ product.id }}
           </td>
@@ -31,7 +31,7 @@
             <img :src="product.img" alt="">
           </td>
           <td>
-            <input type="number">
+            <input type="number" :value="product.quantity">
           </td>
         </tr>
       </tbody>
