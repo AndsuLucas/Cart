@@ -60,6 +60,11 @@ export default {
 
   methods: {
     addProductOnCart(product) {
+      if (product.stock <= 0) {
+        alert('Can\'t add a product without stock');
+        return;
+      }
+
       this.$emit('productAdded', product);
     }
   }

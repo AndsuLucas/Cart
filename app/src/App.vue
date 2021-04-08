@@ -23,6 +23,7 @@ export default {
   methods: {
     addProductOnCart(product) {
       const productOnCart = this.getProductOnCart(product);
+      this.decreaseProductStock(product, 1);
       if (productOnCart != undefined) {
         this.increaseProductQuantity(productOnCart);
         return;
@@ -30,6 +31,10 @@ export default {
 
       product.quantity = 1;
       this.productsOnCart.push(product);
+    },
+
+    decreaseProductStock(product, quantityToDrecrease) {
+      product.stock -= quantityToDrecrease;
     },
 
     increaseProductQuantity(product) {
