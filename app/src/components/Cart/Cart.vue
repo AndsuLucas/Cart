@@ -31,7 +31,7 @@
             <img :src="product.img" alt="">
           </td>
           <td>
-            <input type="number" :value="product.quantity">
+            <input type="number" :value="product.quantity" @input="changeInputQuantity(product, $event.target)">
           </td>
         </tr>
       </tbody>
@@ -49,10 +49,51 @@ export default {
     }
   },
 
+  methods: {
+    changeInputQuantity(product, target) {
+      const oldQuantity = product.quantity;
+      const newQuantity = new Number(target.value);
+      if (newQuantity <= 0) {
+        target.value = oldQuantity;
+        return;
+      }
+
+      if (newQuantity > product.stock) {
+        target.value = oldQuantity;
+        alert('Out of stock');
+        return;
+      }
+
+      this.updateStock(product, newQuantity, oldQuantity);
+      this.$set(product, 'quantity', newQuantity);
+    },
+    updateStock(product, newValue, oldValue) {
+      alert(1);
+      if (newValue == oldValue) {
+        return;
+      }
+
+      if (!this.isIncrease(newValue, oldValue)) {
+        alert('ok');
+        const differenceValue = oldValue - newValue;
+        this.$emit('increaseStock', [product, differenceValue]);
+        return;
+      }
+
+      const differenceValue = newValue - oldValue;
+      this.$emit('decreaseStock', product, differenceValue);
+      return;
+    },
+  
+    isIncrease(newValue, oldValue) {
+      return newValue > oldValue;
+    }
+  },
+
   computed: {
     hasProductsOnCart() {
       return this.products.length != 0;
-    }
+    },
   }
 }
 </script>

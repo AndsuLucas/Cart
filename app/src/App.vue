@@ -2,7 +2,9 @@
   <div id="app">
     <products @productAdded="addProductOnCart"></products>
     <hr>
-    <cart :products="productsOnCart"></cart>
+    <cart :products="productsOnCart"
+      @decreaseStock="decreaseProductStock" @increaseStock="increaseProductStock"
+    ></cart>
   </div>
 </template>
 
@@ -34,7 +36,13 @@ export default {
     },
 
     decreaseProductStock(product, quantityToDrecrease) {
-      product.stock -= quantityToDrecrease;
+      const newStock = product.stock - quantityToDrecrease;
+      this.$set(product, 'stock', newStock);
+    },
+
+    increaseProductStock(product, quantityToIncrease) {
+       const newStock = product.stock + quantityToIncrease;
+      this.$set(product, 'stock', newStock);
     },
 
     increaseProductQuantity(product) {
