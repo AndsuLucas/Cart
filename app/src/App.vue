@@ -41,7 +41,7 @@ export default {
     },
 
     increaseProductStock(product, quantityToIncrease) {
-       const newStock = product.stock + quantityToIncrease;
+      const newStock = product.stock + quantityToIncrease;
       this.$set(product, 'stock', newStock);
     },
 

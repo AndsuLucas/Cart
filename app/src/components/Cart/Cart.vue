@@ -58,7 +58,9 @@ export default {
         return;
       }
 
-      if (newQuantity > product.stock) {
+      const isIncrease = this.isIncrease(newQuantity, oldQuantity)
+      const differenceValue = newQuantity - oldQuantity;
+      if (isIncrease && differenceValue > product.stock) {
         target.value = oldQuantity;
         alert('Out of stock');
         return;
@@ -67,16 +69,15 @@ export default {
       this.updateStock(product, newQuantity, oldQuantity);
       this.$set(product, 'quantity', newQuantity);
     },
+  
     updateStock(product, newValue, oldValue) {
-      alert(1);
       if (newValue == oldValue) {
         return;
       }
 
       if (!this.isIncrease(newValue, oldValue)) {
-        alert('ok');
         const differenceValue = oldValue - newValue;
-        this.$emit('increaseStock', [product, differenceValue]);
+        this.$emit('increaseStock', product, differenceValue);
         return;
       }
 
